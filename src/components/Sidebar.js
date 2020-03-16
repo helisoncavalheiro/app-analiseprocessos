@@ -1,4 +1,5 @@
 import React from 'react';
+import NavItem from './NavItem';
 import $ from 'jquery';
 
 class Sidebar extends React.Component {
@@ -9,9 +10,12 @@ class Sidebar extends React.Component {
             $("body").toggleClass("sb-sidenav-toggled");
         });
 
-        /* FIXME: Corrigir o comportamento de navlink colapsado*/
+        // Add active state to sidbar nav links
+        var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
         $("#layoutSidenav_nav .sb-sidenav a.nav-link").each(function () {
-            $(this).addClass("active");
+            if (this.href === path) {
+                $(this).addClass("active");
+            }
         });
     }
     render() {
@@ -21,18 +25,10 @@ class Sidebar extends React.Component {
                     <div className="sb-sidenav-menu">
                         <div className="nav">
                             <div className="sb-sidenav-menu-heading">Core</div>
-                            <a className="nav-link" href="index.html">
-                                <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
+                            <NavItem showName='Meu Dashboard' beforeIcon='fa-tachometer-alt' path="/home" />
+
                             <div className="sb-sidenav-menu-heading">Interface</div>
-                            <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
-                                Layouts
-                                <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div></a>
-                            <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav className="sb-sidenav-menu-nested nav"><a className="nav-link" href="layout-static.html">Static Navigation</a><a className="nav-link" href="layout-sidenav-light.html">Light Sidenav</a></nav>
-                            </div>
+                            <NavItem showName='Relatórios' beforeIcon='fa-columns' />
                             <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
                                 Pages
@@ -57,7 +53,7 @@ class Sidebar extends React.Component {
                                 </nav>
                             </div>
                             <div className="sb-sidenav-menu-heading">Addons</div>
-                            <a className="nav-link" href="charts.html">
+                            <a className="nav-link" href="/home">
                                 <div className="sb-nav-link-icon"><i className="fas fa-chart-area"></i></div>
                                 Charts
                             </a>
