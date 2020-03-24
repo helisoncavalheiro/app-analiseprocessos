@@ -16,15 +16,15 @@ class Input extends React.Component {
         }
     }
 */
-    handleChange(evt) {
-        this.setState({ value: evt.target.value })
+    handleChange(newValue) {
+        this.setState({ value: newValue })
     }
 
     render() {
         return (
             <div className="form-group">
-                <label htmlFor="matricula">Matrícula do usuário</label>
-                <input type={this.props.type} value={this.state.value} id={this.props.id} onChange={this.handleChange} className="form-control" aria-describedby="" />
+                <label htmlFor="matricula">{this.props.label}</label>
+                <input type={this.props.type} value={this.state.value} id={this.props.id} onChange={(evt)=>{this.handleChange(evt.target.value)}} className="form-control" aria-describedby="" />
             </div>
         )
     }

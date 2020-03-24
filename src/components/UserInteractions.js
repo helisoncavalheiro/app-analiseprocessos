@@ -26,8 +26,10 @@ class UserInteractions extends React.Component {
         this.getUserInteractions = getUserInteractions.bind(this);
         this.constructUsersList = this.constructUsersList.bind(this);
         this.fetchData = this.fetchData.bind(this);
-        this.fillNameById = this.fillNameById.bind(this);
+        this.fillIdByName = this.fillIdByName.bind(this);
         this.constructChart = this.constructChart.bind(this);
+
+        this.inputElement = React.createRef();
 
     }
 
@@ -85,9 +87,8 @@ class UserInteractions extends React.Component {
         return formatedDate;
     }
 
-    fillNameById(id) {
-        console.log(id);
-        document.getElementById('matriculaInput').value = id;
+    fillIdByName(id) {
+        this.inputElement.current.handleChange(id);
     }
 
     constructChart() {
@@ -166,7 +167,7 @@ class UserInteractions extends React.Component {
         //Se a API retornar sucesso renderiza a tabela
         if (this.state.issues.length > 0) {
             let tableData = this.constructTableData();
-            let chart = this.constructChart()
+            let chart = this.constructChart();
             htmlToRender =
                 <div className="row">
                     <div className="col-sm-12">
@@ -196,11 +197,11 @@ class UserInteractions extends React.Component {
                         <form onSubmit={this.fetchData} autoComplete="off">
                             <div className="row">
                                 <div className="col-sm-12 col-md-3">
-                                    <Input type="number" id="matriculaInput" />
+                                    <Input type="number" id="matriculaInput" label="Matrícula do usuário" ref={this.inputElement}/>
                                 </div>
 
                                 <div className="col-sm-12 col-md-5">
-                                    <AutocompleteDropdown label={"Nome do usuário"} listValues={users} onChange={this.fillNameById} />
+                                    <AutocompleteDropdown label={"Nome do usuário"} listValues={users} onChange={this.fillIdByName} />
                                 </div>
 
                                 <div className="col-sm-12 col-md-1 align-self-center">
