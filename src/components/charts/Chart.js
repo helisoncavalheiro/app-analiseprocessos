@@ -10,18 +10,27 @@ export default class Bar extends React.Component {
         this.handleChartTypeChange = this.handleChartTypeChange.bind(this);
     }
 
-    componentDidMount() {
-        let canvasElement = document.getElementById("barChart");
+    componentDidMount(){
+        let canvasElement = document.getElementById("chartWrapper");
+        let chart = new Chart(canvasElement, this.makeChartStructure());
+        this.setState({ chart: chart });
+    }
 
-        let chopt = this.props.options;
+    componentDidUpdate(){
+        this.state.chart.config = this.makeChartStructure();
+        this.state.chart.update();
+    }
 
-        let chart = new Chart(canvasElement, {
-            type: chopt.type,
-            data: {
-                labels: chopt.labels,
-                datasets: chopt.datasets
+    makeChartStructure(){
+
+        let chartOptions = this.props.options;
+
+        let chart = {
+            type: chartOptions.type,
+            data:{
+                labels: chartOptions.labels,
+                datasets: chartOptions.datasets
             },
-
             options: {
                 scales: {
                     yAxes: [{
@@ -32,9 +41,9 @@ export default class Bar extends React.Component {
                     }]
                 }
             }
-        });
+        }
 
-        this.setState({ chart: chart })
+        return chart;
     }
 
     handleChartTypeChange(evt) {
@@ -74,7 +83,7 @@ export default class Bar extends React.Component {
                     </div>
 
                     <div className="row">
-                        <canvas id="barChart" className="col-sm-12"></canvas>
+                        <canvas id="chartWrapper" className="col-sm-12"></canvas>
                     </div>
 
                 </div>
