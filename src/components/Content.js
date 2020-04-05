@@ -1,5 +1,6 @@
 import React from 'react';
 import UserInteractions from './UserInteractions.js';
+import { BrowserRouter, Switch, Route, Router } from 'react-router-dom';
 
 class Content extends React.Component {
 
@@ -9,7 +10,11 @@ class Content extends React.Component {
                 <main>
                     <div className="container-fluid">
                         <div className="container-fluid">
-                            <UserInteractions />
+                            <Switch>
+                                <Route path="/reports">
+                                    <UserInteractions />
+                                </Route>
+                            </Switch>
                         </div>
                     </div>
                 </main>
