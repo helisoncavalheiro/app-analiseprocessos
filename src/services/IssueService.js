@@ -1,67 +1,28 @@
-import api from '../utils/api.js';
+import Api from '../utils/api.js';
+import Util from '../utils/Util.js';
 
-/*
-Função para garantir que os itens serão sempre
-retornados como array
-*/
-function castArray(arrayToCast) {
-    //console.log(arrayToCast);
-    if (Array.isArray(arrayToCast)) {
-        return arrayToCast;
-    } else {
-        return [arrayToCast];
+
+async function getUserCreations(userID) {
+    Api.get(`/issue/author/${userID}`)
+        .then(res => {
+            let data = Util.castArray(res.data);
+            return {
+                code: res.status,
+                status: 'success',
+                msg: 'Sucesso ao recuperar os dados da API!',
+                data: data,
+            }
+        })
+        .catch ((err) => {
+    return {
+        apiResult: {
+            code: err.response.status,
+            msg: 'Houve um erro ao recuperar os dados da API.'
+        }
     }
+})
 }
 
-export async function getUserInteractions(matriucla) {
-    api.get('/user/' + matriucla + '/interactions')
-        .then(res => {
-            let data = castArray(res.data);
-            this.setState({
-                issues: data,
-                apiResult: {
-                    code: res.status,
-                    status: 'success',
-                    msg: 'Sucesso ao recuperar os dados da API!'
-                }
-            });
-        })
-        .catch((err) => {
-            this.setState({
-                issues: [],
-                apiResult: {
-                    code: err.status,
-                    status: 'error',
-                    msg: 'Não foi possível recuperar os dados da api. Motivo: ' + err
-                }
-            })
-            console.error('Não foi possível recuperar os dados da api. Motivo: ' + err);
-            return;
-        });
-}
+export { getUserCreations };
 
-export async function getAllUsers() {
-    api.get('/user/list')
-        .then(res => {
-            let data = castArray(res.data);
-            this.setState({
-                users: data,
-                apiResult: {
-                    status: 'success',
-                    msg: 'Sucesso ao recuperar os dados da API!'
-                }
-            });
 
-        })
-        .catch((err) => {
-            this.setState({
-                users: [],
-                apiResult: {
-                    status: 'error',
-                    msg: 'Não foi possível recuperar os dados da api. Motivo: ' + err
-                }
-            })
-            console.error('Não foi possível recuperar os dados da api. Motivo: ' + err);
-            return;
-        })
-}

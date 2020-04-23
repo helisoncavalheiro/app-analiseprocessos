@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from './Table';
-import { getUserInteractions, getAllUsers } from '../services/IssueService.js';
+import { getUserInteractions, getAllUsers } from '../services/UserService.js';
 import AutocompleteDropdown from './AutocompleteDropdown.js';
 import Input from './Input.js';
 //import { Breadcrumb } from 'react-bootstrap';
