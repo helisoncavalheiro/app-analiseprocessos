@@ -36,10 +36,10 @@ build-app:
   only:
     - master
 
-#deploy:
-#  stage: deploy
-#  image: cdrx/rancher-gitlab-deploy
-#  script:
-#    - upgrade --stack $RANCHER_STACK --service $RANCHER_SERVICE --new-image $LATEST_IMAGE --start-before-stopping
-#  only:
-#    - master
+deploy:
+  stage: deploy
+  image: cdrx/rancher-gitlab-deploy
+  script:
+    - upgrade --stack $RANCHER_STACK --service $RANCHER_SERVICE --new-image $LATEST_IMAGE --start-before-stopping
+  only:
+    - master
