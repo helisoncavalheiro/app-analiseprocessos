@@ -18,6 +18,7 @@ prepare-app:
     paths:
       - node_modules
   script:
+    - export CI=false
     - yarn install
     - yarn build
   only:
