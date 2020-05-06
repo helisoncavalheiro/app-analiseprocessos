@@ -1,5 +1,6 @@
 import React from 'react';
 import UserInteractions from './UserInteractions.js';
+import UserCreations from './UserCreations.js';
 import { BrowserRouter, Switch, Route, Router } from 'react-router-dom';
 
 class Content extends React.Component {
@@ -13,6 +14,10 @@ class Content extends React.Component {
                             <Switch>
                                 <Route path="/reports">
                                     <UserInteractions />
+                                </Route>
+
+                                <Route path="/user/creations">
+                                    <UserCreations />
                                 </Route>
                             </Switch>
                         </div>
