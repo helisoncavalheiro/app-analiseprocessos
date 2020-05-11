@@ -29,7 +29,7 @@ class Input extends React.Component {
                     value={this.state.value}
                     id={this.props.id}
                     onChange={(evt) => { this.handleChange(evt.target.value) }}
-                    onBlur={this.props.onBlur()}
+                    onBlur={this.props.onBlur ? this.props.onBlur : ()=>{return;}}
                     className="form-control"
                     aria-describedby=""
                 />
