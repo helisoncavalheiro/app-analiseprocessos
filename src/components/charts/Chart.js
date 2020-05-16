@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'chart.js';
 import Select from '../formComponents/Select';
-import Breacrumb from '../Breadcrumb';
+import Breacrumb from '../navs/Breadcrumb';
 
 export default class Bar extends React.Component {
     constructor(props) {

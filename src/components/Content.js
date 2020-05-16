@@ -4,6 +4,7 @@ import UserCreations from './UserCreations.js';
 import Servicos from './Servicos.js';
 
 import { BrowserRouter, Switch, Route, Router } from 'react-router-dom';
+import Servico from './screens/Servico.js';
 
 class Content extends React.Component {
 
@@ -24,6 +25,9 @@ class Content extends React.Component {
 
                                 <Route path="/servicos">
                                     <Servicos />
+                                </Route>
+                                <Route path="/servico">
+                                    <Servico />
                                 </Route>
                             </Switch>
                         </div>

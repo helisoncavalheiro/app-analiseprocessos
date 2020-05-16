@@ -1,5 +1,5 @@
 import React from 'react';
-import Breadcrumb from './Breadcrumb';
+import Breadcrumb from './navs/Breadcrumb';
 import UserSelectAutocomplete from './UserSelectAutocomplete.js';
 import { getUserCreations } from '../services/IssueService.js';
 import Table from './Table';

@@ -4,7 +4,7 @@ import { getUserInteractions, getAllUsers } from '../services/UserService.js';
 import AutocompleteDropdown from './AutocompleteDropdown.js';
 import Input from './Input.js';
 //import { Breadcrumb } from 'react-bootstrap';
-import Breadcrumb from './Breadcrumb.js'
+import Breadcrumb from './navs/Breadcrumb.js'
 import Bar from './charts/Chart.js';
 class UserInteractions extends React.Component {
 
