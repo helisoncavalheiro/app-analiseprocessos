@@ -8,9 +8,11 @@ class Breacrumb extends React.Component {
     }
     render() {
         return (
-            <ol className="breadcrumb mb-4">
-                <li className="breadcrumb-item active">{this.props.title}</li>
-            </ol>
+            <nav aria-label="breadcrumb">
+                <ol className="breadcrumb mb-4">
+                    {this.props.children}
+                </ol>
+            </nav>
         )
     }
 }
