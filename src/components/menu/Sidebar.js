@@ -35,6 +35,7 @@ class Sidebar extends React.Component {
                                 <NavItem text="Interações" icon='user-plus' route="/reports" />
                             </NavCollapse>
                             <NavItem text="Solicitações" icon='user-plus' route="/user/creations"/>
+                            <NavItem text="Serviços" icon="cubes" route="/servicos" />
                         </div>
                     </div>
                     <div className="sb-sidenav-footer">
