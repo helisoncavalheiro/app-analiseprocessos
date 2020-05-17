@@ -6,6 +6,7 @@ import Input from './Input.js';
 //import { Breadcrumb } from 'react-bootstrap';
 import Breadcrumb from './navs/Breadcrumb.js'
 import Bar from './charts/Chart.js';
+import BreadcrumbItem from './navs/BreadcrumbItem';
 class UserInteractions extends React.Component {
 
     constructor(props) {
@@ -93,7 +94,7 @@ class UserInteractions extends React.Component {
 
     constructChart() {
 
-        let chartData = [{label: '', value: '' }];
+        let chartData = [{ label: '', value: '' }];
         let trackerControl = [];
 
         this.state.issues.forEach(el => {
@@ -101,24 +102,24 @@ class UserInteractions extends React.Component {
                 let currentTrackerName = el.trackerId.name;
                 let counter = 0;
                 this.state.issues.forEach((el) => {
-                    if (el.trackerId.name === currentTrackerName){
+                    if (el.trackerId.name === currentTrackerName) {
                         counter++;
                     }
                 });
-                chartData.push({label: currentTrackerName, value: counter});
+                chartData.push({ label: currentTrackerName, value: counter });
                 trackerControl.push(currentTrackerName);
             }
         });
         chartData.shift();
 
-        chartData.sort((a, b)=>{
+        chartData.sort((a, b) => {
             const valueA = a.value;
             const valueB = b.value;
 
             let comparison = 0;
-            if(valueA > valueB){
+            if (valueA > valueB) {
                 comparison = -1;
-            }else if(valueA < valueB){
+            } else if (valueA < valueB) {
                 comparison = 1;
             }
             return comparison;
@@ -127,7 +128,7 @@ class UserInteractions extends React.Component {
         let labels = []
         let values = []
 
-        chartData.forEach((el, index)=>{
+        chartData.forEach((el, index) => {
             labels.push(chartData[index].label);
             values.push(el.value);
         });
@@ -144,7 +145,7 @@ class UserInteractions extends React.Component {
             }]
         }
 
-        chartData.forEach(el=>{
+        chartData.forEach(el => {
             let r = Math.floor(Math.random() * (255 - 0)) + 0;
             let g = Math.floor(Math.random() * (255 - 0)) + 0;
             let b = Math.floor(Math.random() * (255 - 0)) + 0;
@@ -192,12 +193,14 @@ class UserInteractions extends React.Component {
                 <h2 className="m-2">Interações do usuário</h2>
                 <div className="card m-4">
                     <div className="card-body">
-                        <Breadcrumb title="Filtros" />
+                        <Breadcrumb>
+                            <BreadcrumbItem active={true}>Filtros</BreadcrumbItem>
+                        </Breadcrumb>
 
                         <form onSubmit={this.fetchData} autoComplete="off">
                             <div className="row">
                                 <div className="col-sm-12 col-md-3">
-                                    <Input type="number" id="matriculaInput" label="Matrícula do usuário" ref={this.inputElement}/>
+                                    <Input type="number" id="matriculaInput" label="Matrícula do usuário" ref={this.inputElement} />
                                 </div>
 
                                 <div className="col-sm-12 col-md-5">

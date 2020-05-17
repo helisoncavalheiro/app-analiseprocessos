@@ -2,6 +2,7 @@ import React from 'react';
 import Chart from 'chart.js';
 import Select from '../formComponents/Select';
 import Breacrumb from '../navs/Breadcrumb';
+import BreadCrumbItem from '../navs/BreadcrumbItem';
 
 export default class Bar extends React.Component {
     constructor(props) {
@@ -10,24 +11,24 @@ export default class Bar extends React.Component {
         this.handleChartTypeChange = this.handleChartTypeChange.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         let canvasElement = document.getElementById("chartWrapper");
         let chart = new Chart(canvasElement, this.makeChartStructure());
         this.setState({ chart: chart });
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         this.state.chart.config = this.makeChartStructure();
         this.state.chart.update();
     }
 
-    makeChartStructure(){
+    makeChartStructure() {
 
         let chartOptions = this.props.options;
 
         let chart = {
             type: chartOptions.type,
-            data:{
+            data: {
                 labels: chartOptions.labels,
                 datasets: chartOptions.datasets
             },
@@ -71,7 +72,9 @@ export default class Bar extends React.Component {
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col-sm-12">
-                                        <Breacrumb title="Opções do gráfico" />
+                                        <Breacrumb>
+                                            <BreadCrumbItem>Opções do gráfico</BreadCrumbItem>
+                                        </Breacrumb>
                                     </div>
                                     <div className="col-sm-3">
                                         <Select id="chartType" label="Tipo de gráfico" options={chartTypes} onChange={this.handleChartTypeChange} />

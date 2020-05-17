@@ -6,6 +6,7 @@ import Table from './Table';
 import Util from '../utils/Util.js';
 import Loader from './Loader.js';
 import Chart from './charts/Chart.js';
+import BreadcrumbItem from './navs/BreadcrumbItem';
 
 class UserCreation extends React.Component {
 
@@ -156,7 +157,9 @@ class UserCreation extends React.Component {
                 <h2 className="m-2">Solicitações do usário</h2>
                 <div className="card m-4">
                     <div className="card-body">
-                        <Breadcrumb title="Filtros" />
+                        <Breadcrumb>
+                            <BreadcrumbItem active={true}>Filtros</BreadcrumbItem>
+                        </Breadcrumb>
 
                         <form onSubmit={this.fetchData} autoComplete="off">
                             <div className="row">
