@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Sidebar from './components/menu/Sidebar';
 import Header from './components/Header';
 import Content from './components/Content';
-import './css/style.css';
+import './css/sb-admin/style.css';
 
 class App extends React.Component {
 
