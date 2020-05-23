@@ -3,11 +3,11 @@ import Breacrumb from '../navs/Breadcrumb';
 import BreadCrumbItem from '../navs/BreadcrumbItem';
 import { getServico } from '../../services/ServicoService.js';
 import Loader from '../Loader';
+
 export default class Servico extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             loading: true,
             servico: {},
@@ -27,9 +27,9 @@ export default class Servico extends React.Component {
 
     fetchServico() {
         this.setState({ loading: true });
-        getServico(50)
+        getServico(this.props.match.params.id)
             .then(result => {
-                console.log(result)
+                console.log()
                 this.setState({
                     loading: false,
                     servico: result.data,
@@ -67,6 +67,7 @@ export default class Servico extends React.Component {
     }
 
     render() {
+        let servico = this.state.servico;
         return (
             <div>
                 {this.state.loading
@@ -80,17 +81,38 @@ export default class Servico extends React.Component {
 
                     )
                     : (
-                        <div className="row ">
-                            <div className="col-sm-12">
-                                <Breacrumb>
-                                    <BreadCrumbItem active={true}><a href="/servicos">Serviços</a></BreadCrumbItem>
-                                    {this.extrairCategorias(this.state.servico.servico).map(categoria => {
-                                        return <BreadCrumbItem>{categoria}</BreadCrumbItem>
-                                    })}
-                                    <BreadCrumbItem>{this.extrairNomeDoServico(this.state.servico.servico)}</BreadCrumbItem>
-                                </Breacrumb >
-                            </div >
-                        </div >
+                        <div>
+                            <div className="row ">
+                                <div className="col-sm-12">
+                                    <Breacrumb>
+                                        <BreadCrumbItem active={true}><a href="/servicos">Serviços</a></BreadCrumbItem>
+                                        {this.extrairCategorias(servico.servico).map(categoria => {
+                                            return <BreadCrumbItem>{categoria}</BreadCrumbItem>
+                                        })}
+                                        <BreadCrumbItem>{this.extrairNomeDoServico(this.state.servico.servico)}</BreadCrumbItem>
+                                    </Breacrumb >
+                                </div >
+                            </div>
+                            <div className="row">
+                                <div className="col-sm-12 col-md-6">
+                                    <div className="card">
+                                        <div className="card-body">
+                                            <div className="row">
+                                                <div className="col-sm-9 vertical-divider" >
+                                                    <span className="font-weight-bold">Serviço: </span>
+                                                    <span className="card-title">{this.extrairNomeDoServico(servico.servico)}</span>
+                                                </div>
+                                                <div className="col-sm-3">
+                                                    <span className="font-weight-bold">ID: </span>
+                                                    <span>{servico.codigo}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     )
                 }
             </div>

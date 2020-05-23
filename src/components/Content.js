@@ -26,9 +26,9 @@ class Content extends React.Component {
                                 <Route path="/servicos">
                                     <Servicos />
                                 </Route>
-                                <Route path="/servico">
-                                    <Servico />
-                                </Route>
+                                
+                                <Route path="/servico/:id" component={Servico}/>
+                                
                             </Switch>
                         </div>
                     </div>

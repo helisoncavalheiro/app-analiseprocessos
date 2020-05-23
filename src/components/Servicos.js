@@ -69,7 +69,7 @@ export default class Servico extends React.Component {
                                 <ListGroup>
                                     {this.state.servicos.map(el => {
                                         return (
-                                            <ActionableItemGroup link="" classes="">{el.servico}</ActionableItemGroup>
+                                            <ActionableItemGroup link={`/servico/${el.codigo}`} classes="">{el.servico}</ActionableItemGroup>
                                         )
                                     })}
 
