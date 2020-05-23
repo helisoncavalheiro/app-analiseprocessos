@@ -4,6 +4,7 @@ import Sidebar from './components/menu/Sidebar';
 import Header from './components/Header';
 import Content from './components/Content';
 import './css/sb-admin/style.css';
+import './css/style.css';
 
 class App extends React.Component {
 
