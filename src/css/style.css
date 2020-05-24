@@ -2,3 +2,7 @@
     border-right: 1px rgb(115, 115, 115) solid;
     padding-right: 5px;
 }
+
+.bg-disabled{
+    background-color: rgb(230, 230, 230);
+}
