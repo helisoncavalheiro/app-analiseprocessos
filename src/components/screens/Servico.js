@@ -3,6 +3,7 @@ import Breacrumb from '../navs/Breadcrumb';
 import BreadCrumbItem from '../navs/BreadcrumbItem';
 import { getServico } from '../../services/ServicoService.js';
 import Loader from '../Loader';
+import Collapsible from '../lists/Collapsible';
 
 export default class Servico extends React.Component {
 
@@ -68,6 +69,36 @@ export default class Servico extends React.Component {
 
     render() {
         let servico = this.state.servico;
+
+        let servicoStatus = { class: '', text: '' };
+
+        switch (servico.status) {
+            case 'false':
+                servicoStatus = {
+                    class: 'danger',
+                    text: 'Inativo'
+                }
+                break;
+            case 'homologacao':
+                servicoStatus = {
+                    class: 'secondary',
+                    text: 'Homologação'
+                }
+                break;
+            case 'true':
+                servicoStatus = {
+                    class: 'success',
+                    text: 'Ativo'
+                }
+                break;
+            default:
+                servicoStatus = {
+                    class: 'secondary',
+                    text: 'Indefinido'
+                }
+                break;
+        }
+
         return (
             <div>
                 {this.state.loading
@@ -97,7 +128,12 @@ export default class Servico extends React.Component {
                                 <div className="col-sm-12 col-md-6">
                                     <div className="card">
                                         <div className="card-body">
-                                            <div className="row">
+                                            <div className="row mb-2">
+                                                <div className="col-sm-12">
+                                                    <span className={"badge badge-" + servicoStatus.class}>{servicoStatus.text}</span>
+                                                </div>
+                                            </div>
+                                            <div className="row mb-2">
                                                 <div className="col-sm-9 vertical-divider" >
                                                     <span className="font-weight-bold">Serviço: </span>
                                                     <span className="card-title">{this.extrairNomeDoServico(servico.servico)}</span>
@@ -105,6 +141,32 @@ export default class Servico extends React.Component {
                                                 <div className="col-sm-3">
                                                     <span className="font-weight-bold">ID: </span>
                                                     <span>{servico.codigo}</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="row mb-2">
+                                                <div className="col-sm-12">
+                                                    <div className="accordion">
+                                                        <div className="card bg-disabled border-0">
+                                                            <div className="card-body">
+                                                                <span className="font-weight-bold card-title" 
+                                                                        data-toggle="collapse" 
+                                                                        data-target="#descricaoDiv" 
+                                                                        aria-expanded="true" 
+                                                                        aria-controls="descricaoDiv"
+                                                                >
+                                                                    <i class="fas fa-chevron-circle-right"></i> 
+                                                                    Descrição
+                                                                </span>
+                                                                <div id="descricaoDiv" className="collapse">
+                                                                    <div className="card-text">
+                                                                        {servico.descricao !== "" ? servico.descricao : "Sem descrição"}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
