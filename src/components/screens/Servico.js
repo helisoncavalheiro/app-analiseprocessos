@@ -3,7 +3,6 @@ import Breacrumb from '../navs/Breadcrumb';
 import BreadCrumbItem from '../navs/BreadcrumbItem';
 import { getServico } from '../../services/ServicoService.js';
 import Loader from '../Loader';
-import Collapsible from '../lists/Collapsible';
 
 export default class Servico extends React.Component {
 
@@ -170,18 +169,27 @@ export default class Servico extends React.Component {
                                                 </div>
                                             </div>
 
-                                            <div className="row mb-2">
+                                            <div className="row mb-4">
                                                 <div className="col-sm-12">
                                                     <span className="font-weight-bold">Projeto: </span>
                                                     <span className="bg-disabled" style={{ padding: '5px' }}>{servico.projeto.id} - {servico.projeto.name}</span>
                                                 </div>
 
                                             </div>
-                                            <div className="row mb-2">
+                                            <div className="row mb-4">
                                                 <div className="col-sm-12">
                                                     <span className="font-weight-bold">Papeis: </span>
-                                                    {servico.solicitantes.map(papel=>{
-                                                        return (<span className="bg-disabled" style={{padding: '5px', margin: '10px'}}>{papel.id} - {papel.name}</span>)
+                                                    {servico.solicitantes.map(papel => {
+                                                        return (<span className="bg-disabled" style={{ padding: '5px', margin: '10px' }}>{papel.id} - {papel.name}</span>)
+                                                    })}
+                                                </div>
+                                            </div>
+
+                                            <div className="row mb-3">
+                                                <div className="col-sm-12">
+                                                    <span className="font-weight-bold">Observadores: </span>
+                                                    {servico.observadores.map(observador => {
+                                                        return (<span className="bg-disabled" style={{ padding: '5px' }}>{observador.id} - {observador.name}</span>)
                                                     })}
                                                 </div>
                                             </div>
