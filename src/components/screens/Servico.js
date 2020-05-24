@@ -149,13 +149,13 @@ export default class Servico extends React.Component {
                                                     <div className="accordion">
                                                         <div className="card bg-disabled border-0">
                                                             <div className="card-body">
-                                                                <span className="font-weight-bold card-title" 
-                                                                        data-toggle="collapse" 
-                                                                        data-target="#descricaoDiv" 
-                                                                        aria-expanded="true" 
-                                                                        aria-controls="descricaoDiv"
+                                                                <span className="font-weight-bold card-title"
+                                                                    data-toggle="collapse"
+                                                                    data-target="#descricaoDiv"
+                                                                    aria-expanded="true"
+                                                                    aria-controls="descricaoDiv"
                                                                 >
-                                                                    <i class="fas fa-chevron-circle-right"></i> 
+                                                                    <i class="fas fa-chevron-circle-right"></i>
                                                                     Descrição
                                                                 </span>
                                                                 <div id="descricaoDiv" className="collapse">
@@ -168,6 +168,14 @@ export default class Servico extends React.Component {
 
                                                     </div>
                                                 </div>
+                                            </div>
+
+                                            <div className="row mb-2">
+                                                <div className="col-sm-12">
+                                                    <span className="font-weight-bold">Projeto: </span>
+                                                    <span className="bg-disabled" style={{padding: '5px'}}>{servico.projeto.id} - {servico.projeto.name}</span>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
