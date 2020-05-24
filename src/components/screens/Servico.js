@@ -125,7 +125,7 @@ export default class Servico extends React.Component {
                                 </div >
                             </div>
                             <div className="row">
-                                <div className="col-sm-12 col-md-6">
+                                <div className="col-sm-12">
                                     <div className="card">
                                         <div className="card-body">
                                             <div className="row mb-2">
@@ -173,9 +173,17 @@ export default class Servico extends React.Component {
                                             <div className="row mb-2">
                                                 <div className="col-sm-12">
                                                     <span className="font-weight-bold">Projeto: </span>
-                                                    <span className="bg-disabled" style={{padding: '5px'}}>{servico.projeto.id} - {servico.projeto.name}</span>
+                                                    <span className="bg-disabled" style={{ padding: '5px' }}>{servico.projeto.id} - {servico.projeto.name}</span>
                                                 </div>
 
+                                            </div>
+                                            <div className="row mb-2">
+                                                <div className="col-sm-12">
+                                                    <span className="font-weight-bold">Papeis: </span>
+                                                    {servico.solicitantes.map(papel=>{
+                                                        return (<span className="bg-disabled" style={{padding: '5px', margin: '10px'}}>{papel.id} - {papel.name}</span>)
+                                                    })}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
