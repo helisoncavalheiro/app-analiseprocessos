@@ -3,6 +3,7 @@ import ListGroup from './lists/ListGroup.js';
 import ActionableItemGroup from './lists/ActionableItemGroup.js';
 import { getServicos } from '../services/ServicoService.js';
 import Loader from './Loader.js';
+import { Table, Button, Card, Form, InputGroup, FormControl } from 'react-bootstrap';
 
 export default class Servico extends React.Component {
 
@@ -17,8 +18,11 @@ export default class Servico extends React.Component {
             apiResult: {
                 code: '',
                 msg: '',
-            }
+            },
+            servicosFiltrados: []
         }
+
+        this.handleSearch = this.handleSearch.bind(this);
     }
 
     componentDidMount() {
@@ -38,7 +42,8 @@ export default class Servico extends React.Component {
                         apiResult: {
                             code: result.code,
                             msg: result.msg
-                        }
+                        },
+                        servicosFiltrados: result.data
                     });
                 }
             }).catch(error => {
@@ -52,11 +57,63 @@ export default class Servico extends React.Component {
             })
     }
 
+    handleSearch(evt) {
+
+        //Pega o valor pesquisado e transforma todas as letras em minúsculo
+        let searchedValue = evt.target.value.toLowerCase();
+
+        //Filtra os elementos possíveis
+        let valuesToDisplay = this.state.servicos.filter((el) => {
+            //retorna todos os valores que foram achados
+            if (searchedValue != "") {
+                return (el.codigo == searchedValue) || (el.servico.toLowerCase().indexOf(searchedValue)) !== -1;
+            } else {
+                return true;
+            }
+
+        });
+
+        //Muda o state com os valores que devem ser renderizados
+        this.setState({
+            servicosFiltrados: valuesToDisplay
+        });
+    }
+
+    handleStatusServico(status) {
+        switch (status) {
+            case "true":
+                return (<td className="text-success">Ativo</td>)
+            case "false":
+                return (<td className="text-danger">Inativo</td>)
+            case "homologacao":
+                return (<td className="text-secondary">Homologação</td>)
+        }
+    }
+
     render() {
 
         return (
-            <div>
-                <h2>Serviços</h2>
+            <Card className="mt-4">
+                <Card.Header>
+                    <div className="row">
+                        <h2>Serviços</h2>
+                        <div className="col-sm-3 float-right">
+                            <Form>
+                                <InputGroup className="mb-3">
+                                    <FormControl
+                                        placeholder="Pesquise um nome ou id de serviço"
+                                        aria-label="Pesquisa"
+                                        aria-describedby="basic-addon2"
+                                        onChange={this.handleSearch}
+                                    />
+                                    <InputGroup.Append>
+                                        <InputGroup.Text id="basic-addon2" className="bg-primary"><a><i class="fas fa-search"></i></a></InputGroup.Text>
+                                    </InputGroup.Append>
+                                </InputGroup>
+                            </Form>
+                        </div>
+                    </div>
+                </Card.Header>
                 <div className="row">
                     {this.state.loading
                         ? (
@@ -66,19 +123,38 @@ export default class Servico extends React.Component {
                         )
                         : (
                             <div className="col-sm-12">
-                                <ListGroup>
-                                    {this.state.servicos.map(el => {
-                                        return (
-                                            <ActionableItemGroup link={`/servico/${el.codigo}`} classes="">{el.servico}</ActionableItemGroup>
-                                        )
-                                    })}
+                                <Table bordered responsive>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nome</th>
+                                            <th>Papeis</th>
+                                            <th>Status</th>
+                                            <th>Opções</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.servicosFiltrados.map(el => {
+                                            return (
+                                                <tr>
+                                                    <td className="align-middle">{el.codigo}</td>
+                                                    <td className="align-middle">{el.servico}</td>
+                                                    <td className="align-middle">{el.solicitantes.map(papel => { return (<span className="bg-disabled">{papel.id + ' - ' + papel.name}</span>) })}</td>
+                                                    <td>{this.handleStatusServico(el.status)}</td>
+                                                    <td className="align-middle"> <Button variant="primary" href={`/servico/${el.codigo}`}><i class="fas fa-eye"></i> Visualizar</Button></td>
+                                                </tr>
 
-                                </ListGroup>
+                                            )
+                                        })}
+                                    </tbody>
+
+                                </Table>
+
                             </div>
                         )
                     }
                 </div>
-            </div>
+            </Card>
         )
     }
 }
