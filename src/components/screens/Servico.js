@@ -3,6 +3,7 @@ import Breacrumb from '../navs/Breadcrumb';
 import BreadCrumbItem from '../navs/BreadcrumbItem';
 import { getServico } from '../../services/ServicoService.js';
 import Loader from '../Loader';
+import Acoes from './Acoes';
 
 export default class Servico extends React.Component {
 
@@ -29,7 +30,7 @@ export default class Servico extends React.Component {
         this.setState({ loading: true });
         getServico(this.props.match.params.id)
             .then(result => {
-                console.log()
+                console.log(result.data);
                 this.setState({
                     loading: false,
                     servico: result.data,
@@ -37,7 +38,9 @@ export default class Servico extends React.Component {
                         code: result.code,
                         msg: result.msg
                     }
-                })
+                });
+
+
             })
             .catch(err => {
                 console.log("Ocorreu um erro. Erro: " + err);
@@ -154,7 +157,7 @@ export default class Servico extends React.Component {
                                                                     aria-expanded="true"
                                                                     aria-controls="descricaoDiv"
                                                                 >
-                                                                    <i class="fas fa-chevron-circle-right"></i>
+                                                                    <i className="fas fa-chevron-circle-right"></i>
                                                                     Descrição
                                                                 </span>
                                                                 <div id="descricaoDiv" className="collapse">
@@ -196,6 +199,11 @@ export default class Servico extends React.Component {
                                         </div>
                                     </div>
 
+                                </div>
+                            </div>
+                            <div className="row mt-4">
+                                <div className="col-sm-12">
+                                    <Acoes idServico={this.state.servico.codigo} />
                                 </div>
                             </div>
                         </div>
