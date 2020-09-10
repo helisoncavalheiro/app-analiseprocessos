@@ -15,6 +15,8 @@ class App extends React.Component {
   }
   render() {
     return (
+      <div>
+        {/*
       <BrowserRouter>
         <div id="wrapper" className="sb-nav-fixed">
           <Header />
@@ -24,6 +26,9 @@ class App extends React.Component {
           </div>
         </div>
       </BrowserRouter>
+      */
+        }
+      </div>
     );
   }
 }
