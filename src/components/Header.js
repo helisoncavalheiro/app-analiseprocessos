@@ -1,7 +1,15 @@
 import React from 'react';
+import {logout} from '../services/LoginService.js';
 
 class Header extends React.Component {
+  
+  constructor(props){
+    super(props);
 
+    this.logout = logout.bind(this);
+    this.handleLogout = this.props.handleLogout;
+  }
+  
   render() {
     return (
 
@@ -23,7 +31,7 @@ class Header extends React.Component {
             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
               <a className="dropdown-item" href="#">Settings</a><a className="dropdown-item" href="#">Activity Log</a>
               <div className="dropdown-divider"></div>
-              <a className="dropdown-item" href="login.html">Logout</a>
+              <a className="dropdown-item" onClick={()=>{this.logout(); this.handleLogout()}}>Logout</a>
             </div>
           </li>
         </ul>

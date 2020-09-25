@@ -20,3 +20,8 @@ export function login(user, password){
 export function isAuthenticated(){
     return (sessionStorage.getItem("token") != null) ? true : false
 }
+
+export function logout(){
+    sessionStorage.removeItem("token");
+    this.setState({isAuthenticated: false});
+}
