@@ -18,6 +18,7 @@ prepare-app:
     paths:
       - node_modules
   script:
+    - apt-get install libpng-dev -y
     - export CI=false
     - yarn install
     - yarn build

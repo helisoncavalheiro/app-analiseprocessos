@@ -3,8 +3,8 @@ FROM node:12.16.1-alpine
 WORKDIR /app
 
 COPY . .
-
-RUN npm install
-RUN npm install react-scripts@3.4.1 --silent
+RUN npm config set registry http://registry.npmjs.org/ && \
+npm install && \
+npm install react-scripts@3.4.1
 
 CMD [ "npm", "start" ]
