@@ -1,10 +1,9 @@
 import React from 'react';
 import { getAcoes } from '../../services/ServicoService.js';
 import Loader from '../Loader.js';
-import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Badge from 'react-bootstrap/Badge';
+import Acao from '../custom/Acao.js';
+import Select from 'react-select';
 
 export default class Acoes extends React.Component {
 
@@ -19,10 +18,14 @@ export default class Acoes extends React.Component {
                 msg: ''
             },
             filtros: {
-                agrupamento: { ativo: false, por: '' },
-                ordenacao: { ativo: false, por: '' }
+                origens: [],
+                destinos: [],
+                papeis: [],
             },
-            acoesFiltradas: []
+            acoesFiltradas: [],
+            origemFiltrada: [],
+            destinoFiltrado: [],
+            papelFiltrado: []
         }
 
         this.getAcoes = getAcoes.bind(this);
@@ -43,8 +46,9 @@ export default class Acoes extends React.Component {
                         code: result.code,
                         msg: result.msg
                     },
-                    acoesFiltradas: this.groupByPapel(result.data)
+                    acoesFiltradas: result.data
                 });
+                this.populaFiltros();
             })
             .catch(err => {
                 console.log("Ocorreu um erro. Erro: " + err);
@@ -56,37 +60,119 @@ export default class Acoes extends React.Component {
                     }
                 });
             });
-
     }
 
-    groupByPapel(acoes) {
-        let acoesFiltradas = []
-        acoes.map(acao => {
-            acao.disponivelPara.map(papel => {
-                let elementoNoArray = acoesFiltradas.find(el => el.key == papel.id);
+    populaFiltros() {
+        let novosFiltros = this.state.filtros;
 
-                console.log(elementoNoArray);
+        this.state.acoes.forEach(acao => {
+            if (novosFiltros.origens.find(origem => origem.value == acao.origem.id) == null) {
+                novosFiltros.origens.push({ value: acao.origem.id, label: acao.origem.name })
+            }
 
-                console.log("O papel já foi mapeado no array: " + (elementoNoArray == undefined) ? "Não" : "Sim");
-                if (elementoNoArray == undefined) {
-                    acoesFiltradas.push({ key: papel.id, texto: papel.name, acoes: [acao] });
-                } else {
-                    console.log()
-                    elementoNoArray.acoes.push(acao);
+            if (novosFiltros.destinos.find(destino => destino.value == acao.destino.id) == null) {
+                novosFiltros.destinos.push({ value: acao.destino.id, label: acao.destino.name })
+            }
+
+
+            acao.disponivelPara.filter(papel => {
+                if (novosFiltros.papeis.find(filtroPapel => filtroPapel.value == papel.id) == null) {
+                    novosFiltros.papeis.push({ value: papel.id, label: papel.name })
                 }
-            })
-        })
+            });
+        });
 
-        return acoesFiltradas;
+        this.setState({
+            filtros: novosFiltros
+        });
+    }
+
+    filtrarPorPapel(acoes, papeis) {
+        let papeisIds = papeis.map(papel => { return papel.value });
+        return acoes.filter(acao => {
+            let disponivelPara = acao.disponivelPara.map(papel => { return papel.id });
+            return disponivelPara.some(i => papeisIds.indexOf(i) >= 0);
+        });
+    }
+
+    filtrarPorOrigem(acoes, origens) {
+        return acoes.filter(acao => {
+            return origens.find(origem => origem.value == acao.origem.id) != null;
+        });
+    }
+
+    filtrarPorDestino(acoes, destinos) {
+        return acoes.filter(acao => {
+            return destinos.find(destino => destino.value == acao.destino.id) != null;
+        });
+    }
+
+    handleFiltragem() {
+        let acoesToShow = this.state.acoes;
+
+        if (this.state.origemFiltrada.length > 0) {
+            acoesToShow = this.filtrarPorOrigem(acoesToShow, this.state.origemFiltrada);
+        }
+
+        if (this.state.destinoFiltrado.length > 0) {
+            acoesToShow = this.filtrarPorDestino(acoesToShow, this.state.destinoFiltrado);
+        }
+
+        if (this.state.papelFiltrado.length > 0) {
+            acoesToShow = this.filtrarPorPapel(acoesToShow, this.state.papelFiltrado);
+        }
+
+        return acoesToShow;
     }
 
     render() {
-        let acoes = this.state.acoes;
+        let acoes = this.state.acoesFiltradas;
         return (
             <div className="row">
                 <div className="col-sm-12">
                     <Card>
-                        <Card.Header><h4>Ações</h4></Card.Header>
+                        <Card.Header>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <h4>Ações</h4>
+                                    <hr class="solid"/>
+                                </div>
+                            </div>
+                            <div className="row mt-2">
+                                <div className="col-sm-4">
+                                    <p className="font-weight-bold">Situação de origem</p>
+                                    <Select
+                                        onChange={(values) => {
+                                            this.setState({ origemFiltrada: (values != null) ? values : [] });
+                                        }}
+                                        id="filtro_origem"
+                                        options={this.state.filtros.origens}
+                                        isMulti
+                                        placeholder="Situação de origem" />
+                                </div>
+                                <div className="col-sm-4">
+                                    <p className="font-weight-bold">Situação de destino</p>
+                                    <Select
+                                        onChange={(values) => {
+                                            this.setState({ destinoFiltrado: (values != null) ? values : [] });
+                                        }}
+                                        id="filtro_destino"
+                                        options={this.state.filtros.destinos}
+                                        isMulti
+                                        placeholder="Situação de destino" />
+                                </div>
+                                <div className="col-sm-4">
+                                    <p className="font-weight-bold">Disponível para</p>
+                                    <Select onChange={(values) => {
+                                        this.setState({ papelFiltrado: (values != null) ? values : [] });
+                                    }}
+                                        id="filtro_papel"
+                                        options={this.state.filtros.papeis}
+                                        isMulti
+                                        placeholder="Disponível para" />
+                                </div>
+                            </div>
+                        </Card.Header>
                         <Card.Body>
                             <div className="card-content">
                                 {this.state.loading
@@ -99,66 +185,8 @@ export default class Acoes extends React.Component {
                                     )
                                     : (
                                         <div className="row">
-                                            {this.state.acoes.map(acao => {
-                                                return (
-                                                    <div className="col-sm-12 mt-4">
-                                                        <Card border={(acao.ativo ? "primary" : "warning")}>
-                                                            <Card.Header>
-                                                                <div style={{ fontSize: '18px' }}>
-                                                                    <span className="pr-2">Nome:</span>
-                                                                    <span className="font-weight-bold">
-                                                                        {acao.texto}
-                                                                    </span>
-
-                                                                </div>
-                                                            </Card.Header>
-
-                                                            <Card.Body>
-                                                                <Card>
-                                                                    <Card.Body>
-                                                                        <span className="mb-2" style={{ margin: '0px 2px', fontSize: '18px' }}>Workflow: </span>
-                                                                        <span className="bg-disabled" style={{ fontSize: '16px' }}>
-                                                                            <span style={{ paddingRight: '5px' }}>
-                                                                                {acao.origem.id + ' - ' + acao.origem.name}
-                                                                            </span>
-                                                                            <i className="fas fa-chevron-right" ></i>
-                                                                            <span style={{ paddingLeft: '5px' }}>
-                                                                                {acao.destino.id + ' - ' + acao.destino.name}
-                                                                            </span>
-                                                                        </span>
-
-
-                                                                        {
-                                                                            acao.atribuir ? (
-                                                                                <span className="pl-2" style={{ fontSize: '20px' }}>
-                                                                                    <Badge variant="primary">Atribuível para:
-                                                                                            {acao.atribuiveis.map(papel => { return papel.id + ' - ' + papel.name })}</Badge>
-                                                                                </span>
-                                                                            )
-                                                                                : ""
-                                                                        }
-
-                                                                    </Card.Body>
-                                                                </Card>
-                                                                <Card className="mt-2">
-                                                                    <Card.Body>
-                                                                        <span style={{ margin: '0px 2px', fontSize: '18px' }}>Papéis: </span>
-
-                                                                        {
-                                                                            acao.disponivelPara.map(papel => {
-                                                                                return (
-                                                                                    <span className="bg-disabled" style={{ fontSize: '16px' }}>
-                                                                                        {papel.id + ' - ' + papel.name}
-                                                                                    </span>)
-                                                                            })}
-                                                                    </Card.Body>
-                                                                </Card>
-
-                                                            </Card.Body>
-
-                                                        </Card>
-                                                    </div>
-                                                )
+                                            {this.handleFiltragem().map(acao => {
+                                                return <Acao data={acao} />
                                             })
                                             }
                                         </div>
