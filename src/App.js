@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Sidebar from './components/menu/Sidebar';
+import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Content from './components/Content';
 import Login from './components/screens/Login';
 import { isAuthenticated } from './services/LoginService.js';
+import './assets/sb-admin-2/css/sb-admin-2.css';
+import './assets/css/style.css';
 
 class App extends React.Component {
 
@@ -36,20 +38,11 @@ class App extends React.Component {
             <div>
               <main>
                 <div id="wrapper" className="sb-nav-fixed">
-                  <Header handleLogout={this.handleAuthChange} />
-                  <div id="layoutSidenav">
                     <Sidebar />
-
-                    <div id="layoutSidenav_content" >
-
-                      <div className="container-fluid">
-                        <div className="container-fluid">
-                          <Content />
-                        </div>
-                      </div>
-
+                    <div id="content-wrapper" className="d-flex flex-column container-fluid">
+                      <Header handleLogout={this.handleAuthChange} />
+                      <Content />
                     </div>
-                  </div>
                 </div>
               </main>
 
