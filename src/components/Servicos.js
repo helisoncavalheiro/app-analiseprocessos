@@ -4,6 +4,7 @@ import ActionableItemGroup from './lists/ActionableItemGroup.js';
 import { getServicos } from '../services/ServicoService.js';
 import Loader from './Loader.js';
 import { Table, Button, Card, Form, InputGroup, FormControl } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export default class Servico extends React.Component {
 
@@ -139,9 +140,32 @@ export default class Servico extends React.Component {
                                                 <tr>
                                                     <td className="align-middle">{el.codigo}</td>
                                                     <td className="align-middle">{el.servico}</td>
-                                                    <td className="align-middle">{el.solicitantes.map(papel => { return (<span className="bg-disabled">{papel.id + ' - ' + papel.name}</span>) })}</td>
+                                                    <td className="align-middle">
+                                                        <div className="row">
+                                                            {
+                                                                el.solicitantes.map(papel => { 
+                                                                    return (
+                                                                        <div className="col-sm-6 mt-2">
+                                                                            <Card className="bg-gray-400">
+                                                                                <span style={{padding: '5px', color: '#353535'}}>{papel.id + ' - ' + papel.name}</span>
+                                                                            </Card>
+                                                                        </div>
+                                                                    ) 
+                                                                })
+                                                            }
+                                                        </div>
+                                                    </td>
                                                     <td>{this.handleStatusServico(el.status)}</td>
-                                                    <td className="align-middle"> <Button variant="primary" href={`/servico/${el.codigo}`}><i class="fas fa-eye"></i> Visualizar</Button></td>
+                                                    <td className="align-middle">
+                                                        <Link to={`/servico/${el.codigo}`}>
+                                                            <Button variant="primary">
+                                                                <span style={{fontSize: '12px'}}>
+                                                                    <i class="fas fa-eye"></i>
+                                                                    Visualizar
+                                                                </span>
+                                                            </Button>
+                                                        </Link>
+                                                    </td>
                                                 </tr>
 
                                             )
