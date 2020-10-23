@@ -1,14 +1,17 @@
 import axios from 'axios';
 
 const url = process.env.REACT_APP_ANALISEPROCESSOS_API_HOST;
-const token = sessionStorage.getItem('token');
 
 const Api = axios.create({
-    baseURL: url,
-    headers:{
-        'Authorization': `Bearer ${token}`
-    }
+    baseURL: url
+});
 
+Api.interceptors.request.use(async config => {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
 });
 
 

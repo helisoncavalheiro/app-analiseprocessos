@@ -32,7 +32,7 @@ export default class Login extends React.Component {
                 }
 
             }).catch(err => {
-                this.setState({ loading: false, error: "Houve um problema ao fazer login. Verifique seus dados e tente novamente" });
+                this.setState({ loading: false, error: "Houve um problema ao fazer login. Verifique seus dados e tente novamente" + err });
             })
     }
 
