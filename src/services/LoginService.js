@@ -1,4 +1,6 @@
+import React from 'react';
 import Axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 export function login(user, password){
     return new Promise((resolve, reject)=>{
@@ -19,9 +21,4 @@ export function login(user, password){
 
 export function isAuthenticated(){
     return (sessionStorage.getItem("token") != null) ? true : false
-}
-
-export function logout(){
-    sessionStorage.removeItem("token");
-    this.setState({isAuthenticated: false});
 }

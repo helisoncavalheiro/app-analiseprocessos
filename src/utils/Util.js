@@ -1,3 +1,5 @@
+import jwt_decode from "jwt-decode";
+
 let Util = {
     castArray: function (arrayToCast) {
         //console.log(arrayToCast);
@@ -7,10 +9,10 @@ let Util = {
             return [arrayToCast];
         }
     },
-
+    
     handleDateFormat: function (stringDate) {
         stringDate = stringDate.replace(/Z\[UTC\]$/, "");
-
+        
         let ano = stringDate.substr(0, 4);
         let mes = stringDate.substr(5, 2);
         let dia = stringDate.substr(8, 2);
@@ -20,9 +22,9 @@ let Util = {
         //let milissegundo = stringDate.substring(20);
         let formatedDate = dia + "/" + mes + "/" + ano + "\n" + hora + ":" + minuto;
         return formatedDate;
-
+        
     },
-
+    
     constructTableData() {
         let tableData = [];
         this.state.issues.forEach(el => {
@@ -32,10 +34,18 @@ let Util = {
                 tracker: el.trackerId.name,
                 status: el.statusId.name
             });
-
+            
         });
-
+        
         return tableData;
+    },
+    
+    decodeJWT(){
+        try{
+            return jwt_decode(sessionStorage.getItem("token"));
+        }catch(err){
+            return null;
+        }
     }
 }
 export default Util;

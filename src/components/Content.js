@@ -8,6 +8,7 @@ import Servico from './screens/Servico.js';
 import { isAuthenticated } from '../services/LoginService.js';
 import Sidebar from './Sidebar.js';
 import Header from './Header.js';
+import Util from '../utils/Util.js';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={props => (
@@ -29,7 +30,13 @@ const Content = () => {
                 <div id="wrapper" className="sb-nav-fixed">
                     <Sidebar />
                     <div id="content-wrapper" className="d-flex flex-column container-fluid">
-                        <Header />
+                        {
+                            isAuthenticated() 
+                            ? (<Header userName={Util.decodeJWT().full_name}/>)
+                            : (<Header />)
+                        
+                        }
+                        
                         <div id="content">
                             <Switch>
                                 <PrivateRoute exact path="/" component={()=>(<div></div>)} />
