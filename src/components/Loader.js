@@ -1,15 +1,17 @@
 import React from 'react';
+import { useLoading, Audio } from '@agney/react-loading';
 
-class Loader extends React.Component {
+function Loader() {
+    const { containerProps, indicatorEl } = useLoading({
+        loading: true,
+        indicator: <Audio width="45" />,
+    });
 
-    render() {
-        return (
-            <div className="spinner-grow" style={{width: '3rem', height: '3rem'}} role="status">
-                <span className="sr-only">Loading...</span>
-            </div>
-        )
-    }
-
+    return(
+        <section {...containerProps} className="align-content-center" style={{textAlign: 'center'}}>
+            {indicatorEl}
+        </section>
+    )
 }
 
 export default Loader;
