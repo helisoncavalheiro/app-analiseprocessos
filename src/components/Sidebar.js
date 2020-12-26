@@ -25,7 +25,7 @@ function Sidebar(){
           <hr className="sidebar-divider my-0"/>
           
           <Nav.Item as="li">
-            <Link className="nav-link" to="/home">
+            <Link className="nav-link" to="/dashboard">
               <i className="fas fa-fw fa-tachometer-alt"></i>
               <span>Dashboards</span>
             </Link>

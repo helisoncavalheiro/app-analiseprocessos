@@ -9,6 +9,7 @@ import { isAuthenticated } from '../services/LoginService.js';
 import Sidebar from './Sidebar.js';
 import Header from './Header.js';
 import Util from '../utils/Util.js';
+import Dashboard from './screens/Dashboard.js';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
@@ -40,6 +41,8 @@ const Content = () => {
                         <div id="content">
                             <Switch>
                                 <PrivateRoute exact path="/" component={() => (<div></div>)} />
+
+                                <PrivateRoute exact path="/dashboard" component={Dashboard}/>
 
                                 <PrivateRoute exact path={`/user/interacoes`} component={UserInteractions} />
 
