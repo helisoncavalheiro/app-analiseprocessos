@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@agney/react-loading": "^0.1.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.2",
     "chart.js": "^2.9.3",
     "jquery": "^3.4.1",
